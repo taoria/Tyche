@@ -32,6 +32,6 @@ Divide  TRPG Rules into Json-Style files.
 
 Automatically build and generate character sheet.
 
-Offers a easy way for users to design TRPG gamerule.
+Offers an easy way for users to design TRPG gamerules.
 
 **just an idea**
