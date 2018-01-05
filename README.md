@@ -24,7 +24,7 @@ npm run e2e
 npm test
 ```
 
-##Basic Idea
+## Basic Idea
 
 A WebApp based on [Vue.js](https://vuejs.org/) with ui-framework[Element](http://element.eleme.io/#/zh-CN)
 
