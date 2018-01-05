@@ -30,7 +30,7 @@ A WebApp based on [Vue.js](https://vuejs.org/) with ui-framework[Element](http:/
 
 Divide  TRPG Rules into Json-Style files.
 
-Automatically build and generate character sheet.
+Automatically builds and generates character sheet.
 
 Offers an easy way for users to design TRPG gamerules.
 
