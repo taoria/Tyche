@@ -24,4 +24,14 @@ npm run e2e
 npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+##Basic Idea
+
+A WebApp based on [Vue.js](https://vuejs.org/) with ui-framework[Element](http://element.eleme.io/#/zh-CN)
+
+Divide  TRPG Rules into Json-Style files.
+
+Automatically build and generate character sheet.
+
+Offers a easy way for users to design TRPG gamerule.
+
+**just an idea**
