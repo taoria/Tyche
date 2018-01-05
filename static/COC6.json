@@ -1,0 +1,45 @@
+{
+  "characterCard": {
+    "divisions": [
+      {
+        "name:": "base",
+        "id": 0,
+        "content": [
+          {
+            "name":"playName",
+            "hint":"玩家名称",
+            "input-type":"string",
+            "bound":"boundtype:none"
+          },
+          {
+            "name":"nationality",
+            "hint":"国籍",
+            "input-type":"string",
+            "bound":"boundtype:none"
+          },
+          {
+            "name":"gender",
+            "hint":"性别",
+            "bound":"boundtype:none",
+            "input-type":"selectable-string",
+            "type-selectable-string":["男","女","扶她","秀吉","无性"]
+          },
+          {
+            "name":"wealth",
+            "hint":"财富",
+            "input-type":"int",
+            "bound":"boundtype:range",
+            "range":[1,10]
+          },
+          {
+            "name":"strength",
+            "hint":"力量",
+            "input-type":"int",
+            "bound":"boundtype:range",
+            "range":[1,10]
+          }
+        ]
+      }
+    ]
+  }
+}
