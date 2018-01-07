@@ -1,45 +1,89 @@
-{
-  "characterCard": {
-    "divisions": [
-      {
-        "name:": "base",
-        "id": 0,
-        "content": [
-          {
-            "name":"playName",
-            "hint":"玩家名称",
-            "input-type":"string",
-            "bound":"boundtype:none"
-          },
-          {
-            "name":"nationality",
-            "hint":"国籍",
-            "input-type":"string",
-            "bound":"boundtype:none"
-          },
-          {
-            "name":"gender",
-            "hint":"性别",
-            "bound":"boundtype:none",
-            "input-type":"selectable-string",
-            "type-selectable-string":["男","女","扶她","秀吉","无性"]
-          },
-          {
-            "name":"wealth",
-            "hint":"财富",
-            "input-type":"int",
-            "bound":"boundtype:range",
-            "range":[1,10]
-          },
-          {
-            "name":"strength",
-            "hint":"力量",
-            "input-type":"int",
-            "bound":"boundtype:range",
-            "range":[1,10]
-          }
-        ]
-      }
-    ]
+{ "rulename":"COC6",
+  "rule": {
+    "characterCard": {
+      "divisions": [
+        {
+          "divname": "base",
+          "id": 0,
+          "hint": "基础信息",
+          "content": [
+            {
+              "name": "playName",
+              "hint": "玩家名称",
+              "inputType": "string",
+              "boundType": "none"
+            },
+            {
+              "name": "nationality",
+              "hint": "国籍",
+              "inputType": "string",
+              "boundType": "none"
+            },
+            {
+              "name": "gender",
+              "hint": "性别",
+              "inputType": "string",
+              "boundType": "select",
+              "ex": ["男", "女", "扶她", "秀吉", "无性"]
+            },
+            {
+              "name": "wealth",
+              "hint": "财富",
+              "inputType": "int",
+              "boundType": "range",
+              "ex": [1, 10]
+            },
+            {
+              "name": "strength",
+              "hint": "力量",
+              "inputType": "int",
+              "boundType": "range",
+              "ex": [3, 22]
+            },
+            {
+              "name": "health",
+              "hint": "生命",
+              "inputType": "pair(int,int)",
+              "boundType": "pair(int,auto)",
+              "auto": "{strength}/2"
+            }
+          ]
+        },
+        {
+          "divname": "skill",
+          "id": 0,
+          "hint": "技能",
+          "content": [
+            {
+              "name": "jump",
+              "hint": "跳跃",
+              "inputType": "string",
+              "boundType": "range",
+              "ex": [1, 100]
+            },
+            {
+              "name": "hide",
+              "hint": "躲藏",
+              "inputType": "string",
+              "boundType": "range",
+              "ex": [1, 100]
+            },
+            {
+              "name": "wudao",
+              "hint": "武道",
+              "boundType": "range",
+              "ex": [1, 100]
+            },
+            {
+              "name": "drive",
+              "hint": "驾驶",
+              "inputType": "int",
+              "boundType": "range",
+              "ex": [1, 100]
+            }
+          ]
+        }
+      ]
+    }
   }
 }

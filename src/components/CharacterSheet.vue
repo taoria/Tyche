@@ -1,42 +1,73 @@
 <template>
     <div>
         <el-form ref="form" :model="form" label-width="120px">
-            <div class="field-container">
-                <div class="little-field" v-for="field in sheetDivisions[page].divinfo.list" :key="field.id" style="">
-                    <input-field :field-label='field.ifield.showname' :min='parseInt(field.ifield.getUnit("min"))' :max='parseInt(field.ifield.getUnit("max"))'></input-field>
-                </div>
-            </div>
+            <el-container>
+                <el-aside>
+                    <el-tabs v-model="activeName" tab-position="left">
+                        <el-tab-pane v-for="divs in sheetDivisions" :key="divs.name" :label="divs.hint" :name="divs.name"></el-tab-pane>
+                    </el-tabs>
+                </el-aside>
+                <el-main>
+                    <div class="field-container">
+                        <el-row>
+                            <el-col :span="24" :offset="0">
+                                <div class="little-field" v-for="field in getPage(activeName).list" :key="field.id">
+                                    <el-col :span="8" :offset="0">
+                                        <div v-if="field.inputType==='int'">
+                                            <int-field  :field-label='field.hint' :bound='field.boundType' :ex='field.ex'></int-field>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="8" :offset="0">
+                                        <div v-if="field.inputType==='string'">
+                                            <str-field  :field-label='field.hint' :bound='field.boundType' :ex='field.ex'></str-field>
+                                        </div>
+                                    </el-col>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </el-main>
+            </el-container>
         </el-form>
-        <div class="block">
-            <el-pagination background layout="prev, pager, next" :total="100" :page-size="sheetDivisions.length" :current-page.sync="page">
-            </el-pagination>
-        </div>
     </div>
 </template>
 <script>
     export default {
-        name: "InputCom",
         props: ['sheetDivisions'],
-        methods: {},
+        methods: {
+            trylog:function(x){
+                return x;
+            },
+            getPage(activeName){
+                
+                for(var i=0;i<this.sheetDivisions.length;i++){
+                    
+                    if(this.sheetDivisions[i].name===this.activeName){
+                       
+                        return this.sheetDivisions[i];
+                      
+                    }
+                }
+               
+                return this.sheetDivisions[0];
+            }
+        },
+        mounted:function(){
+            console.log(this.sheetDivisions);
+        },
         data() {
             return {
                 value: '',
                 page: 0,
-                form: {
-                }
+                form: {},
+                activeName: ''
             }
         }
     }
 </script>
 <<style>
-    .big-div {
-        width: 80%;
-        margin: 0 auto;
-    }
-    .field-container {
-        margin: 0 auto;
-    }
+    .field-container {}
     .little-field {
-        width: 35%;
+        width: 80%;
     }
 </style>

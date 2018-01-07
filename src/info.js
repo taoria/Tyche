@@ -1,45 +1,31 @@
-function field(stype, sinput, svaluebind, sshowname) {
-  this.type = stype;
-  this.input = sinput;
-  this.inf = new Array();
-  this.showname = sshowname;
-  this.setInf = function(str) { 
-    var res=str.split(',');
-    for(var p=0;p<res.length;p++){
-        var unit  =  res[p].split(':');
-        this.inf[unit[0]] = unit[1];
-    }
-  }; 
-  this.setInf(svaluebind);
-  this.getUnit=function(str){
-    console.log(str+":"+this.inf[str]);
-    return this.inf[str];
-  };
+//一些简单的数据
+function auto(str) {}
+function range(min, max) {}
+function field(sname, sinput, sbound, no_ex,shint) {
+  this.name = sname;
+  this.inputType = sinput;
+  this.boundType = sbound;
+  this.hint = shint;
+  this.ex = no_ex;
 }
-function divinfo(melists) {
+var RuleCaches = new Array();
+function CacheRule(data) {
+  var name = data.rulename;
+  var rule = data.rule;
+  RuleCaches[name] = rule;
+}
+function LoadCacheRule(str) {
+  if (RuleCaches[str] == undefined) {
+    console.log("error no cached rules");
+  }
+  return RuleCaches[str];
+}
+function divinfo(melists,hint) {
+  this.name = "未定义名称";
+  this.hint = hint;
   this.list = melists;
 }
-function GetRuleList(){
-  return [{id:0,name:"COC6"},{id:1,name:"DND3R"}]
+function GetRuleList() {
+  return [{ id: 0, name: "COC6" }, { id: 1, name: "DND3R" }];
 }
-function ParseString(str,targetstr){
-
-}
-function GetRule(ruleName){
-
-}
-function importFile(){
-  var selectedFile = document.getElementById("files").files[0];
-  var name = selectedFile.name;
-  var size = selectedFile.size;
-  console.log("文件名:"+name+"大小："+size);
-
-  var reader = new FileReader();
-  reader.readAsText(selectedFile);
-  reader.onload = function(){
-      console.log(this.result);//当读取完成之后会回调这个函数，然后此时文件的内容存储到了result中。直接操作即可。
-  };
-}
-export { //很关键
-  field,divinfo,GetRuleList
-}
+export { field, divinfo, GetRuleList, CacheRule, LoadCacheRule };
