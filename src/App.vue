@@ -1,20 +1,22 @@
 <template>
   <div>
-      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#dd4343" text-color="#FFF" active-text-color="#fff">
-      <el-col :span="8" :xs="24" :sm="6" :md="4" :lg="2"  :offset="0">
-        <el-menu-item index="1">
-          <router-link to="Character">人物卡管理</router-link>
-        </el-menu-item>
-       </el-col >
-         <el-col :span="8" :xs="24" :sm="6" :md="4" :lg="2"  :offset="0">
-        <el-menu-item index="2">
-          <router-link to="Rule">规则管理</router-link></el-menu-item>
-         </el-col>
-           <el-col :span="8" :xs="24" :sm="6" :md="4" :lg="2"  :offset="0">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#dd4343" text-color="#FFF" active-text-color="#fff">
+      <el-col :span="8" :xs="24" :sm="6" :md="4" :lg="2" :offset="0">
+        <router-link to="Character">
+          <el-menu-item index="1">
+            人物卡管理
+          </el-menu-item>
+        </router-link>
+      </el-col>
+      <el-col :span="8" :xs="24" :sm="6" :md="4" :lg="2" :offset="0">
+        <router-link to="Rule">
+          <el-menu-item index="2">规则管理</el-menu-item>
+        </router-link>
+      </el-col>
+      <el-col :span="8" :xs="24" :sm="6" :md="4" :lg="2" :offset="0">
         <el-menu-item index="3">用户中心</el-menu-item>
-           </el-col>
-      </el-menu>
-   
+      </el-col>
+    </el-menu>
     <div>
       <router-view></router-view>
     </div>

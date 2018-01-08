@@ -6,7 +6,7 @@
             <el-container>
                 <el-aside width="80px">
                     <el-tabs v-model="activeName" tab-position="left">
-                        <el-tab-pane v-for="divs in sheetDivisions" :key="divs.name" :label="divs.hint" :name="divs.name"></el-tab-pane>
+                        <el-tab-pane v-for="divs in sheetDivisions" :key="divs.name" :label="divs.hint" :name="divs.divname"></el-tab-pane>
                     </el-tabs>
                 </el-aside>
                 <el-main>
@@ -44,12 +44,12 @@
             PageList: function(activeName) {
                 var page = this.GetPage(activeName);
                 if (page == undefined) return [];
-                return page.list;
+                return page.content;
             },
             GetPage(activeName) {
                 if (this.sheetDivisions == undefined) return;
                 for (var i = 0; i < this.sheetDivisions.length; i++) {
-                    if (this.sheetDivisions[i].name === this.activeName) {
+                    if (this.sheetDivisions[i].divname === this.activeName) {
                         return this.sheetDivisions[i];
                     }
                 }
@@ -60,7 +60,7 @@
             }
         },
         mounted: function() {
-            console.log(this.sheetDivisions);
+           
         },
         data() {
             return {

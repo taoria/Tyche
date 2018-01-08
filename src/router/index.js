@@ -13,6 +13,8 @@ import Rule from "@/components/Rule";
 import IntField from "@/components/UICom/IntField";
 import NumberRollers from "@/components/Sheet/NumberRollers";
 import ButtonGroupDialog from "@/components/UICom/ButtonGroupDialog";
+import ParsingRule from "@/components/RuleMode/ParsingRule";
+
 import axios from "axios";
 import VueAxios from "vue-axios";
 import StringField from "@/components/UICom/StringField";
@@ -23,6 +25,7 @@ Vue.component("str-field", StringField);
 Vue.component("button-group-dialog", ButtonGroupDialog);
 Vue.component("int-field", IntField);
 Vue.component("number-roller", NumberRollers);
+Vue.component("parsing-rule",ParsingRule);
 Vue.use(VueAxios, axios);
 
 export default new Router({

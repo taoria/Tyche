@@ -16,7 +16,7 @@
   export default {
     props: ['fieldLabel', 'bound', 'ex','change','name'],
     mounted: function() {
-      console.log(this.bound);
+     
     },
     methods:{
       onchange(){

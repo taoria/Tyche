@@ -1,4 +1,5 @@
 { "rulename":"COC6",
+  "rulePart":["characterCard","detection"],
   "rule": {
     "characterCard": {
       "divisions": [
