@@ -9,7 +9,6 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 Vue.config.productionTip = false;
-
 /* eslint-disable no-new */
 new Vue({
   el: "#app",

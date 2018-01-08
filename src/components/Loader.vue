@@ -4,8 +4,8 @@
 <script>
   export default {
     props:{
-      
-    }
+
+    },
     data(){
       return {
         per:0

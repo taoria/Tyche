@@ -57,20 +57,21 @@
             {
               "name": "jump",
               "hint": "跳跃",
-              "inputType": "string",
+              "inputType": "int",
               "boundType": "range",
               "ex": [1, 100]
             },
             {
               "name": "hide",
               "hint": "躲藏",
-              "inputType": "string",
+              "inputType": "int",
               "boundType": "range",
               "ex": [1, 100]
             },
             {
               "name": "wudao",
               "hint": "武道",
+              "inputType": "int",
               "boundType": "range",
               "ex": [1, 100]
             },
