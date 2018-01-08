@@ -2,7 +2,7 @@
   <el-container>
     <el-main>
       <button-group-dialog :infos='rules' :dialog-name='"当前规则:"+rules[ruleid].name' v-on:getResult='chooseResult'></button-group-dialog>
-      <CharacterSheet :sheet-divisions='GetCharacterSheet()'>
+      <CharacterSheet :sheet-divisions='dataDivisions'>
       </CharacterSheet>
     </el-main>
   </el-container>
@@ -24,6 +24,7 @@
       return {
         ruleid: 0,
         rules: GetRuleList(),
+        dataDivisions:[]
       };
     },
     mounted: function() {
@@ -53,6 +54,7 @@
         this.$http.get('/static/' + str + '.json').then(response => {
           data = response.data;
           CacheRule(data);
+          this.GetCharacterSheet();
         }, response => {});
         return data;
       },
@@ -60,6 +62,7 @@
       GetCharacterSheet: function() {
         var name = this.rules[this.ruleid].name;
         var lcc = LoadCacheRule(name);
+        if(lcc==undefined)return;
         if (lcc.characterCard == undefined) {
           console.log("cant find rule named :" + name);
           return;
@@ -73,8 +76,7 @@
           difi.name = characterCard.divisions[i].divname;
           divisions.push(difi);
         }
-     
-        return divisions;
+        this.dataDivisions  = divisions;
       },
       GetFieldList: function(content) {
         var fields = new Array();

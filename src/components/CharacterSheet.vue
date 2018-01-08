@@ -11,7 +11,7 @@
                     <div class="field-container">
                         <el-row>
                             <el-col :span="24" :offset="0">
-                                <div class="little-field" v-for="field in getPage(activeName).list" :key="field.id">
+                                <div class="little-field" v-for="field in PageList(activeName)" :key="field.id">
                                     <el-col :span="8" :offset="0">
                                         <div v-if="field.inputType==='int'">
                                             <int-field  :field-label='field.hint' :bound='field.boundType' :ex='field.ex'></int-field>
@@ -38,8 +38,14 @@
             trylog:function(x){
                 return x;
             },
-            getPage(activeName){
-                
+            PageList:function(activeName){
+                var page = this.GetPage(activeName);
+                if(page==undefined) return [];
+                console.log(page);
+                return page.list;
+            },
+            GetPage(activeName){
+                if(this.sheetDivisions==undefined) return;
                 for(var i=0;i<this.sheetDivisions.length;i++){
                     
                     if(this.sheetDivisions[i].name===this.activeName){
