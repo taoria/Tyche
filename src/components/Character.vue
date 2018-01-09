@@ -26,8 +26,6 @@
     },
     data() {
       return {
-        ruleid: 0,
-        rules: GetRuleList(),
         dataDivisions: [],
         activeName: '',
         TopList: [{

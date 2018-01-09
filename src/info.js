@@ -4,8 +4,7 @@ function range(min, max) {}
 var RuleCaches = new Array();
 function CacheRule(data) {
   var name = data.rulename;
-  var rule = data.rule;
-  RuleCaches[name] = rule;
+  RuleCaches[name] = data;
 }
 function LoadCacheRule(str) {
   if (RuleCaches[str] == undefined) {

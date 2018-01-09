@@ -1,7 +1,8 @@
 { "rulename":"COC6",
-  "rulePart":["characterCard","detection"],
+  "itemList":[{"name":"characterCard","hint":"人物卡"},{"name":"check","hint":"鉴定条目"}],
   "rule": {
     "characterCard": {
+      "itemList":[{"name":"name","hint":"条目名"},{"name":"hint","hint":"显示"},{"name":"inputType","hint":"输入类型"},{"name":"boundType","hint":"约束类型"},{"name":"ex","hint":"附加值"}],
       "divisions": [
         {
           "divname": "base",
@@ -86,6 +87,9 @@
           ]
         }
       ]
+    },
+    "check":{
+
     }
   }
 }

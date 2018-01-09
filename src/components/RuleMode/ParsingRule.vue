@@ -21,14 +21,13 @@
       this.LoadFakeJson(this.rules[this.ruleid].name);
       this.LoadData();
     },
- 
     methods: {
-         chooseResult: function(id) {
-      this.ruleid = id;
-      if (LoadCacheRule(this.rules[this.ruleid].name) == undefined)
-        this.LoadFakeJson(this.rules[this.ruleid].name);
-      this.LoadData();
-    },
+      chooseResult: function(id) {
+        this.ruleid = id;
+        if (LoadCacheRule(this.rules[this.ruleid].name) == undefined)
+          this.LoadFakeJson(this.rules[this.ruleid].name);
+        this.LoadData();
+      },
       LoadFakeJson: function(str) {
         var data;
         this.$http.get('static/' + str + '.json').then(response => {
@@ -42,25 +41,28 @@
       },
       GetElement: function(str) {
         //获取当前选择的规则名称
-      
         var name = this.rules[this.ruleid].name;
         var lcc = LoadCacheRule(name);
         if (lcc == undefined) {
           console.log("Can't find rule named:" + name);
-        }
-        if (str === '' || str == undefined) {
-          return lcc;
-        }
-     
-        var target = lcc[str];
-          console.log(target);
-        if (target == undefined) {
-          console.log("Can't find feature named:" + str);
           return;
         }
-     
-        var divisions = target.divisions;
-        return divisions;
+        if (str === '' || str == undefined) {
+          console.log("request entire rule");
+          return lcc;
+        }
+        lcc = lcc.rule;
+        if (lcc == undefined) return;
+        if (str in lcc) {
+          var target = lcc[str];
+          if (target == undefined) {
+            console.log("Can't find feature named:" + str);
+            return;
+          }
+          var divisions = target.divisions;
+          return divisions;
+        }
+        return;
       },
       LoadData: function() {
         //向父组件发送规则内容
