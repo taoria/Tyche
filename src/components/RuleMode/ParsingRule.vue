@@ -30,14 +30,18 @@
       },
       LoadFakeJson: function(str) {
         var data;
-        this.$http.get('static/' + str + '.json').then(response => {
+        if(LoadCacheRule(str)==undefined){
+           this.$http.get('static/' + str + '.json').then(response => {
           //从本地文件获取JSON
+      
           data = response.data;
           //将文件缓存
+
           CacheRule(data);
           this.LoadData();
         }, response => {});
         return data;
+        }
       },
       GetElement: function(str) {
         //获取当前选择的规则名称
@@ -48,7 +52,6 @@
           return;
         }
         if (str === '' || str == undefined) {
-          console.log("request entire rule");
           return lcc;
         }
         lcc = lcc.rule;

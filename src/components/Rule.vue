@@ -1,23 +1,39 @@
 <template>
   <div>
-    <parsing-rule :requestType="''" v-on:after-data-loaded="OnLoad"></parsing-rule>
+
     <el-container>
       <el-header>
-        <el-tabs v-model="activeName" tab-position="top">
-          <el-tab-pane v-for="item in tableName " :key="item.name" :label="item.hint" :name="item.name"></el-tab-pane>
-        </el-tabs>
+        <parsing-rule :requestType="''" v-on:after-data-loaded="OnLoad" ></parsing-rule>
       </el-header>
+    </el-container>
+    <el-container>
+        <item-dialog :id='clickId' :items='ClickItem' :vis='DialogVisible' v-on:change='OnChanges' v-on:cancelClicked='OnCancel' :itemList='tableIt'>
+        </item-dialog>
+      <el-tabs v-model="activeName" tab-position="top">
+        <el-tab-pane v-for="item in tableName " :key="item.name" :label="item.hint" :name="item.name"></el-tab-pane>
+      </el-tabs>
       <el-aside>
         <el-tabs v-model="activeDiv" tab-position="left">
-          <el-tab-pane v-for="divs in tablePgs" :key="divs.name" :label="divs.hint" :name="divs.divname"></el-tab-pane>
+          <el-tab-pane v-for="divs in tablePgs" :key="divs.divname" :label="divs.hint" :name="divs.divname"></el-tab-pane>
         </el-tabs>
       </el-aside>
       <el-main>
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column v-for="item in tableIt " :key="item.name" :label="item.hint" :name="item.name" :prop="item.name" width="180">
+        <el-table :data="tableData">
+            <el-table-column
+      type="index"
+      :index="indexMethod"></el-table-column>
+          <el-table-column v-for="(val,key) in tableIt " :key="key" :label="val" :name="key" :prop="key" width="180">
+          </el-table-column>
+          <el-table-column label="操作" width="100">
+            <template slot-scope="scope">
+                <el-button @click="handleClick(scope.row)" type="text" size="small">修改</el-button>
+                <el-button type="text" size="small">删除</el-button>
+            </template>
           </el-table-column>
         </el-table>
+              <el-button type="text" >添加 </el-button>
       </el-main>
+
     </el-container>
   </div>
 </template>
@@ -26,8 +42,15 @@
     computed: {
       tableIt: function() {
         var table = this.GetTable();
-        if (table != undefined)
-          return table.itemList;
+      
+        if (table != undefined){
+            console.log(table.itemList);
+            return table.itemList;
+        }
+          
+      },
+      ClickItem:function(){
+        return this.clickItem;
       },
       tablePgs: function() {
         var table = this.GetTable();
@@ -39,18 +62,37 @@
           console.log("can't load division info of " + table.name)
         }
       },
-      tableData:function(){
-        if(this.tablePgs==undefined) return;
-        if(this.activeDiv in this.tablePgs){
-          return this.tablePgs[this.activeDiv].content;
+      DialogVisible:function(){
+        return this.visMod;
+      },
+      tableData: function() {
+        if (this.tablePgs == undefined) return;
+        for (var i = 0; i < this.tablePgs.length; i++) {
+          if (this.tablePgs[i].divname == this.activeDiv)
+            return this.tablePgs[i].content;
         }
         return [];
       }
     },
     methods: {
       OnLoad(object) {
+  
+        if (object == undefined) return;
         this.rule = object.rule;
         this.tableName = object.itemList;
+      },
+      SaveRules: function() {
+      },
+      OnChanges:function(id,name,str){
+          this.tableData[id][name]= str;
+      },
+      OnCancel:function(id){
+    
+        this.visMod = false;
+ 
+      },
+      indexMethod:function(index){
+        return index;
       },
       GetTable() {
         if (this.activeName == '') {
@@ -62,8 +104,12 @@
           }
           return tableList;
         }
-      }
+      },
+      handleClick(id){
 
+       this.clickItem = id;
+          this.visMod = true;
+      }
     },
     data() {
       return {
@@ -72,7 +118,10 @@
         tableName: [],
         currentTable: '',
         activeName: '',
-        activeDiv: ''
+        activeDiv: '',
+        clickId:{},
+        clickItem:{},
+        visMod:false
       }
     }
   }

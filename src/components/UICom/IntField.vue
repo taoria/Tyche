@@ -2,7 +2,7 @@
   <div>
     <div v-if="bound==='range'">
       <el-form-item class="item" :label='fieldLabel' >
-         <el-input-number v-model="val"   :min='ex[0]' :max='ex[1]' @change="onchange"></el-input-number>
+         <el-input-number v-model="val"   :min='ex["min"]' :max='ex["max"]' @change="onchange"></el-input-number>
       </el-form-item>
     </div>
     <div v-else-if="bound==='none'">

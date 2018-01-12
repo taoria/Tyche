@@ -1,25 +1,29 @@
 <<template>
   <div>
     <div v-if="bound==='none'">
-      <el-form-item class="item" :label='fieldLabel'>
-        <el-input v-model='val' :placeholder="'请输入'+fieldLabel" @change="onchange"></el-input>
-      </el-form-item>
+        <el-input  v-model='val' :placeholder="'请输入'+fieldLabel" @change="onchange" >{{val}}</el-input>
     </div>
     <div v-else-if="bound==='select'">
-      <el-form-item class="item" :label='fieldLabel'>
         <el-autocomplete class="inline-input" v-model="val" :fetch-suggestions="querySearch" placeholder="请输入内容" @select="handleSelect" @change="onchange"></el-autocomplete>
-      </el-form-item>
     </div>
   </div>
 </template>
 <<script>
   export default {
-    props: ['fieldLabel', 'bound', 'ex', 'change', 'name'],
-    mounted: function() {},
+    props: ['fieldLabel', 'bound', 'ex', 'change', 'name', 'value'],
+    computed:{
+      val:{
+        get:function(){
+          return this.value;
+        },
+        set:function(value){
+          this.tempVal = value;
+        }
+      }
+    },
     methods: {
       querySearch(queryString, cb) {
         var results = queryString ? this.ex.filter(this.createFilter(queryString)) : this.ex;
-        console.log(this.ex);
         cb(results);
       },
       createFilter(queryString) {
@@ -29,12 +33,12 @@
       },
       handleSelect() {},
       onchange() {
-        this.change(this.name,this.val);
+        this.$emit("change",this.name,this.tempVal);
       }
     },
     data() {
       return {
-        val: '',
+        tempVal:{},
         lab: this.fieldLabel
       }
     }

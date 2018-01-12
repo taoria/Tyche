@@ -1,8 +1,9 @@
 <template>
   <el-container>
+    <el-header>  <parsing-rule :requestType="'characterCard'" v-on:after-data-loaded="OnLoad"></parsing-rule></el-header>
     <el-main>
       <!-- 通过parsing-rule组件去获取对应的规则文件 -->
-      <parsing-rule :requestType="'characterCard'" v-on:after-data-loaded="OnLoad"></parsing-rule>
+    
       <div class='toptab'>
         <el-tabs v-model="activeName" tab-position="bottom">
           <el-tab-pane v-for="p in TopList " :key="p.name" :label="p.hint" :name="p.name"></el-tab-pane>
