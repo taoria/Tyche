@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#dd4343" text-color="#FFF" active-text-color="#fff">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
       <el-col :span="8" :xs="24" :sm="6" :md="4" :lg="2" :offset="0">
         <router-link to="Character">
           <el-menu-item index="1">
@@ -14,7 +14,9 @@
         </router-link>
       </el-col>
       <el-col :span="8" :xs="24" :sm="6" :md="4" :lg="2" :offset="0">
+        <router-link to="User">
         <el-menu-item index="3">用户中心</el-menu-item>
+        </router-link>
       </el-col>
     </el-menu>
     <div>

@@ -7,7 +7,6 @@ function CacheRule(data) {
   RuleCaches[name] = data;
 }
 function LoadCacheRule(str) {
-  console.log(str);
   if (RuleCaches[str] == undefined) {
     console.log("error no cached rules");
   }
