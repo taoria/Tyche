@@ -7,7 +7,7 @@ import "element-theme-chalk";
 import "../theme/index.css";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-
+import axios from 'axios'
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({

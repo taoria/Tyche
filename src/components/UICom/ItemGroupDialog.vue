@@ -58,14 +58,14 @@ export default {
     },
     closeSave: function() {
       try {
-        console.log(this.tempEx);
-        this.itemsCopy["ex"] = JSON.parse(this.tempEx);
+        if ("ex" in this.itemsCopy) {
+          this.itemsCopy["ex"] = JSON.parse(this.tempEx);
+        }
       } catch (err) {
         console.log(err);
         this.$message.error("错误附加值格式,附加值格式是json格式");
-        return ;
+        return;
       } finally {
-
       }
       this.$emit("saveClicked", this.itemsCopy);
     },

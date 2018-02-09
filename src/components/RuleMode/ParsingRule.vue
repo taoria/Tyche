@@ -1,5 +1,5 @@
 <<template>
-  <button-group-dialog :infos='rules' :dialog-name='"当前规则:"+rules[ruleid].name' v-on:getResult='chooseResult'>
+  <button-group-dialog :infos='rules' :dialog-name='"当前规则:"+RuleName()' v-on:getResult='chooseResult'>
   </button-group-dialog>
 </template>
 <script>
@@ -10,30 +10,53 @@ export default {
     return {
       currentRule: "COC6",
       ruleid: 0,
-      rules: GetRuleList()
+      rules: []
     };
   },
   mounted: function() {
-    this.LoadFakeJson(this.rules[this.ruleid].name);
-    this.LoadData();
+    this.GetRuleList();
   },
   methods: {
+    RuleName:function(){
+      if(this.rules.length>0)
+      return this.rules[this.ruleid].name;
+      else
+      return "尚未添加规则";
+    },
     chooseResult: function(id) {
       this.ruleid = id;
+      if (this.rules.length == 0) {
+        return ;
+      }
       if (LoadCacheRule(this.rules[this.ruleid].name) == undefined)
-        this.LoadFakeJson(this.rules[this.ruleid].name);
+        this.LoadJson(this.rules[this.ruleid].name);
       this.LoadData();
     },
-    LoadFakeJson: function(str) {
+    GetRuleList: function() {
+        console.log("gettin gules");
+      this.$http.get("http://localhost:5000/rule/getlist").then(
+        response => {
+          var data = response.data;
+          //将文件缓存
+             console.log(data);
+          this.rules = data;
+          if (this.rules.length > 0){
+            this.LoadJson(this.rules[this.ruleid].name);
+         
+          }
+        },
+        response => {}
+      );
+    },
+    LoadJson: function(str) {
       var data;
       if (LoadCacheRule(str) == undefined) {
-        console.log("try to get files");
-        this.$http.get("http://localhost:3000/Data/" + str + ".json").then(
+        this.$http.get("http://localhost:5000/rule/get/" + str).then(
           response => {
             data = response.data;
             //将文件缓存
-
             CacheRule(data);
+            console.log(data);
             this.LoadData();
           },
           response => {}
@@ -43,6 +66,7 @@ export default {
     },
     GetElement: function(str) {
       //获取当前选择的规则名称
+      console.log(this.rules);
       var name = this.rules[this.ruleid].name;
       var lcc = LoadCacheRule(name);
       if (lcc == undefined) {

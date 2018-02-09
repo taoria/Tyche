@@ -4,10 +4,12 @@ import ElementUi from "element-ui";
 
 //Page Com
 import Login from "@/components/Pages/Login";
+import Register from "@/components/Pages/Register";
 import CharacterSheet from "@/components/CharacterSheet";
 import OverView from "@/components/OverView";
 import Character from "@/components/Character";
 import Rule from "@/components/Rule";
+
 //Com
 import ItemGroupDialog from "@/components/UICom/ItemGroupDialog";
 import IntField from "@/components/UICom/IntField";
@@ -29,7 +31,6 @@ Vue.component("number-roller", NumberRollers);
 Vue.component("parsing-rule", ParsingRule);
 Vue.component("item-dialog", ItemGroupDialog);
 Vue.use(VueAxios, axios);
-
 export default new Router({
   routes: [
     {
@@ -57,6 +58,11 @@ export default new Router({
       path: "/Login",
       name: "Login",
       component: Login
+    },
+    {
+      path:"/Register",
+      name:"Register",
+      component:Register
     }
   ]
 });

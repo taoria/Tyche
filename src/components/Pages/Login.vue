@@ -16,10 +16,12 @@
   </el-row>
   <el-row type="flex" class="row-bg" justify="center" :gutter="15">
     <el-col :xs="10" :sm="4" :md="4" :lg="4">
-      <el-button id="login" v-on:click="check" style="width:100%" type="primary">登录</el-button>
+      <el-button id="login"  style="width:100%" type="primary">登录</el-button>
     </el-col>
     <el-col :xs="10" :sm="4" :md="4" :lg="4">
-      <el-button id="logout" v-on:click="check" style="width:100%" type="primary">注册</el-button>
+      <router-link  to="Register">
+      <el-button id="logout"  style="width:100%" type="primary">注册</el-button>
+      </router-link>
     </el-col>
   </el-row>
   </div>

@@ -13,6 +13,6 @@ function LoadCacheRule(str) {
   return RuleCaches[str];
 }
 function GetRuleList() {
-  return [{ id: 0, name: "COC6" }, { id: 1, name: "DND3R" }];
+  return [{ id:0, name: "COC6" }];
 }
 export {GetRuleList, CacheRule, LoadCacheRule };
