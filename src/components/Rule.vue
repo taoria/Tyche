@@ -1,39 +1,52 @@
 <template>
   <div>
-
     <el-container>
       <el-header>
-        <parsing-rule :requestType="''" v-on:after-data-loaded="OnLoad"></parsing-rule>
+        <el-row type='flex' justify="center">
+          <keep-alive>
+            <parsing-rule :requestType="''" v-on:after-data-loaded="OnLoad"></parsing-rule>
+          </keep-alive>
+        </el-row>
       </el-header>
+      <item-dialog :id='-1' :items='NewDivision' :vis='NewDivDialogVis' v-on:change='OnDivDialogChange' v-on:cancelClicked='OnDivDialogCancel' v-on:saveClicked='OnDivSave' :itemList='{name:"名称",hint:"提示"}'></item-dialog>
     </el-container>
-    <el-container>
+    <el-header>
       <item-dialog :id='clickId' :items='ClickItem' :vis='DialogVisible' v-on:change='OnChanges' v-on:cancelClicked='OnCancel' v-on:saveClicked='OnSave' :itemList='tableIt'>
       </item-dialog>
-      <el-header>
-        <span>
+      <span>
+        <el-row type='flex' justify="center">
           <el-button type="text" v-on:click='OnNewDiv'>添加一项</el-button>
-          <el-tabs v-model="activeName" tab-position="top">
-            <el-tab-pane v-for="item in tableName" :key="item.name" :label="item.hint" :name="item.name"></el-tab-pane>
-          </el-tabs>
-        </span>
-      </el-header>
+        </el-row>
+        <el-tabs v-model="activeName" tab-position="top">
+          <el-tab-pane v-for="item in tableName" :key="item.name" :label="item.hint" :name="item.name"></el-tab-pane>
+        </el-tabs>
+
+      </span>
+    </el-header>
+    <el-container>
       <el-aside>
-        <el-row>
+        <el-row type='flex' justify="center" class="lefttabs">
           <el-tabs v-model="activeDiv" tab-position="left">
             <el-tab-pane v-for="divs in tablePgs" :key="divs.divname" :label="divs.hint" :name="divs.divname"></el-tab-pane>
           </el-tabs>
         </el-row>
-        <el-row>
-          <el-col :span="8" :offset="2">
+        <el-row type='flex' justify="center">
           <el-button type="text" v-on:click='OnNewDiv'>添加一页</el-button>
-          </el-col>
         </el-row>
-        <item-dialog :id='-1' :items='NewDivision' :vis='NewDivDialogVis' v-on:change='OnDivDialogChange' v-on:cancelClicked='OnDivDialogCancel' v-on:saveClicked='OnDivSave' :itemList='{name:"名称",hint:"提示"}'></item-dialog>
       </el-aside>
       <el-main>
         <el-table :data="tableData">
-          <el-table-column type="index" :index="indexMethod"></el-table-column>
-          <el-table-column v-for="(val,key) in tableIt " :key="key" :label="val" :name="key" :prop="key" width="180">
+          <el-table-column v-for="(value,key) in tableIt " :key="key" :label="value" :name="key" :prop="key" :width='ColWidth(key)'>
+            <template slot-scope="scope">
+              <div v-if='key=="ex"'>
+                <i class="el-icon-circle-plus-outline"></i>
+                <span v-if='JSON.stringify(scope.row.ex).length<32'>{{ JSON.stringify(scope.row.ex) }}</span>
+                <span v-else>{{ "......" }}</span>
+              </div>
+              <div v-else>
+                <span>{{scope.row[key]}} </span>
+              </div>
+            </template>
           </el-table-column>
           <el-table-column label="操作" width="100">
             <template slot-scope="scope">
@@ -42,21 +55,18 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-button type="text">添加 </el-button>
+        <el-row type='flex' justify="center" class="lefttabs">
+          <el-button type="text">添加 </el-button>
+          <el-button type="text" @click='OnUpdate'>保存 </el-button>
+        </el-row>
       </el-main>
-
     </el-container>
   </div>
 </template>
 <script>
 export default {
+  mounted: function() {},
   computed: {
-    tableIt: function() {
-      var table = this.GetTable();
-      if (table != undefined) {
-        return table.itemList;
-      }
-    },
     ClickItem: function() {
       return this.clickItem;
     },
@@ -65,6 +75,8 @@ export default {
       var table = this.GetTable();
       if (table == undefined) return;
       if (table.divisions != undefined) {
+        console.log("载入规则分割:");
+        console.log(table.divisions);
         return table.divisions;
       } else {
         console.log("can't load division info of " + table.name);
@@ -78,11 +90,17 @@ export default {
     },
     tableData: function() {
       if (this.tablePgs == undefined) return;
+
       for (var i = 0; i < this.tablePgs.length; i++) {
+        console.log("遍历当前所属的规则子项");
+        console.log(this.tablePgs[i].divname);
         if (this.tablePgs[i].divname == this.activeDiv)
-          return this.tablePgs[i].content;
+          console.log("寻找到当前规则子项的内容");
+        console.log(this.tablePgs[i].content);
+        this.tableIt = this.tablePgs[i].itemList;
+        console.log(this.tableIt);
+        return this.tablePgs[i].content;
       }
-      return [];
     },
     NewDivision: function() {
       this.newDiv = { name: "name", hint: "提示" };
@@ -90,10 +108,38 @@ export default {
     }
   },
   methods: {
+    ColWidth: function(key) {
+      if (key == "ex") {
+        return "300";
+      } else {
+        return "180";
+      }
+    },
+    OnUpdate() {
+      console.log(this.topRule);
+      var params = new URLSearchParams();
+      console.log(params);
+      params.append("rule", JSON.stringify(this.topRule));
+      this.$http
+        .post(
+          "rules/update/" + this.topRule.rulename,
+          params
+        )
+        .then(response => {
+          var data = response.data;
+          this.$message({
+            message: data,
+            type: "success"
+          });
+        })
+        .catch(function(error) {
+          this.$message.error("更新失败了");
+        });
+    },
     OnLoad(object) {
       if (object == undefined) return;
       this.rule = object.rule;
-      console.log(this.rule);
+      this.topRule = object;
       this.tableName = object.itemList;
     },
     OnChanges: function(id, name, str) {
@@ -105,6 +151,7 @@ export default {
       this.visMod = false;
     },
     OnSave: function(item) {
+      console.log("尝试保存项:" + this.clickId);
       this.$set(this.tableData, this.clickId, item);
       this.clickItem = {};
       this.clickId = 0;
@@ -128,7 +175,7 @@ export default {
     },
     handleClick(id) {
       this.clickItem = this.tableData[id];
-      this.clickIdId = id;
+      this.clickId = id;
       this.visMod = true;
     },
     OnDivDialogChange(id, name, str) {},
@@ -155,13 +202,15 @@ export default {
       clickItem: {},
       newDiv: {},
       visMod: false,
-      divDialogVis: false
+      divDialogVis: false,
+      tableIt: {},
+      topRule: {}
     };
   }
 };
 </script>
 <style>
-  .el-row {
-    margin-top: 20px;
-  }
+.lefttabs {
+  margin-top: 20px;
+}
 </style>

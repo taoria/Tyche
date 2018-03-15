@@ -19,7 +19,6 @@ import ParsingRule from "@/components/RuleMode/ParsingRule";
 import StringField from "@/components/UICom/StringField";
 
 import axios from "axios";
-import VueAxios from "vue-axios";
 
 Vue.use(Router);
 Vue.use(ElementUi);
@@ -30,7 +29,6 @@ Vue.component("int-field", IntField);
 Vue.component("number-roller", NumberRollers);
 Vue.component("parsing-rule", ParsingRule);
 Vue.component("item-dialog", ItemGroupDialog);
-Vue.use(VueAxios, axios);
 export default new Router({
   routes: [
     {

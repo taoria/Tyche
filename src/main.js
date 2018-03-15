@@ -9,6 +9,9 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import axios from 'axios'
 Vue.config.productionTip = false;
+Vue.prototype.$http = axios
+axios.defaults.baseURL = "http://localhost:12070/"
+axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
 /* eslint-disable no-new */
 new Vue({
   el: "#app",

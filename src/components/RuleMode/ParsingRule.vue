@@ -17,51 +17,45 @@ export default {
     this.GetRuleList();
   },
   methods: {
-    RuleName:function(){
-      if(this.rules.length>0)
-      return this.rules[this.ruleid].name;
-      else
-      return "尚未添加规则";
+    RuleName: function() {
+      if (this.rules.length > 0) return this.rules[this.ruleid].name;
+      else return "尚未添加规则";
     },
     chooseResult: function(id) {
       this.ruleid = id;
       if (this.rules.length == 0) {
-        return ;
+        return;
       }
       if (LoadCacheRule(this.rules[this.ruleid].name) == undefined)
         this.LoadJson(this.rules[this.ruleid].name);
-      this.LoadData();
     },
     GetRuleList: function() {
-        console.log("gettin gules");
-      this.$http.get("http://localhost:5000/rule/getlist").then(
-        response => {
+      this.$http
+        .get("rules/get/rulelist")
+        .then(response => {
           var data = response.data;
-          //将文件缓存
-             console.log(data);
           this.rules = data;
-          if (this.rules.length > 0){
-            this.LoadJson(this.rules[this.ruleid].name);
-         
-          }
-        },
-        response => {}
-      );
+          this.LoadJson(this.rules[this.ruleid].name);
+        })
+        .catch(function(error) {
+          console.log("获取规则的请求发生了错误");
+        });
     },
     LoadJson: function(str) {
       var data;
       if (LoadCacheRule(str) == undefined) {
-        this.$http.get("http://localhost:5000/rule/get/" + str).then(
-          response => {
+        this.$http
+          .get("rules/get/" + str)
+          .then(response => {
             data = response.data;
             //将文件缓存
             CacheRule(data);
             console.log(data);
             this.LoadData();
-          },
-          response => {}
-        );
+          });
         return data;
+      }else{
+        this.LoadData();
       }
     },
     GetElement: function(str) {

@@ -42,12 +42,6 @@
     },
     methods: {
       LoadFakeJson: function(str) {
-        var data;
-        this.$http.get('/static/' + str + '.json').then(response => {
-          data = response.data;
-          CacheRule(data);
-        }, response => {});
-        return data;
       }
     },
     data() {
